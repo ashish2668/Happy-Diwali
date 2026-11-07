@@ -1,0 +1,25 @@
+Diwali Blast bundled sound recordings
+
+These are real recordings and play locally from the assets/sounds folder.
+They are not generated tones. The supplied clips are short playback excerpts
+from the recordings listed below. No sound plays before user interaction.
+
+fireworks-nearby.ogg
+  "Fireworks in distance 5.ogg" — public domain
+  https://commons.wikimedia.org/wiki/File:Fireworks_in_distance_5.ogg
+
+fireworks-distant.ogg
+  "Fireworks in distance 1.ogg" — public domain
+  https://commons.wikimedia.org/wiki/File:Fireworks_in_distance_1.ogg
+
+fireworks-crackle.ogg
+  "Fireworks piece.ogg" — public domain
+  https://commons.wikimedia.org/wiki/File:Fireworks_piece.ogg
+
+celebration.ogg
+  "Fireworks end of act applause.ogg" — public domain
+  https://commons.wikimedia.org/wiki/File:Fireworks_end_of_act_applause.ogg
+
+fireworks-ambience.ogg
+  "Fireworks in distance 3.ogg" — public domain
+  https://commons.wikimedia.org/wiki/File:Fireworks_in_distance_3.ogg

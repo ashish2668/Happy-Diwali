@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090811">
+  <meta name="description" content="Upload your photo, create your own virtual Diwali blast, play fun games and send personalized Diwali wishes to your friends!">
+  <meta property="og:title" content="Diwali Blast — Your Face. Your Blast. Your Diwali!">
+  <meta property="og:description" content="Make a virtual Diwali blast, light some diyas and send a little happiness.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/og-card.svg">
+  <title>Diwali Blast — Your Face. Your Blast. Your Diwali!</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪔%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Diwali Blast home"><span class="brand-mark">✦</span> DIWALI<span>BLAST</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#blast">Create a blast</a>
+      <a href="#games">Mini games</a>
+      <a href="#greeting">Wish card</a>
+    </nav>
+    <button class="sound-toggle" id="soundToggle" type="button" aria-label="Toggle sound effects"><span>♫</span><span id="soundLabel">Sound off</span></button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+      <div class="hero-content">
+        <div class="eyebrow"><span class="eyebrow-line"></span> A LITTLE LIGHT. A LOT OF MAGIC. <span class="eyebrow-line"></span></div>
+        <h1>HAPPY <span>DIWALI</span><i>!</i></h1>
+        <p class="hero-subtitle">This Diwali, create your own <strong>blast.</strong></p>
+        <p class="hero-copy">A festival of light, laughter, and one very satisfying virtual BOOM.</p>
+        <button class="button button-primary hero-cta" id="celebrateBtn" type="button">LET’S CELEBRATE <span>↘</span></button>
+        <div class="hero-note"><span class="pulse-dot"></span> MADE FOR JOY. SAFE ON SCREEN.</div>
+      </div>
+      <div class="floating-diya diya-left" aria-hidden="true">🪔</div>
+      <div class="floating-diya diya-right" aria-hidden="true">🪔</div>
+      <div class="scroll-cue"><span></span> SCROLL INTO THE FESTIVAL</div>
+      <button class="surprise-float" id="surpriseBtn" type="button" aria-label="Trigger a surprise blast"><span>✦</span><b>SURPRISE<br>BOOM</b></button>
+    </section>
+
+    <section class="section blast-section" id="blast">
+      <div class="section-heading">
+        <span class="section-kicker">01 / YOUR MOMENT</span>
+        <h2>Your face.<br><em>Your blast.</em></h2>
+        <p>Step into your own little Diwali movie. Your photo stays right here on your device.</p>
+      </div>
+      <div class="blast-layout">
+        <div class="upload-card glass">
+          <div class="card-topline"><span>CREATE YOUR CHARACTER</span><span class="step-tag">01 — 02</span></div>
+          <label class="upload-zone" for="photoInput" id="uploadZone">
+            <span class="upload-icon">＋</span>
+            <strong id="uploadTitle">DROP IN YOUR PHOTO</strong>
+            <span id="uploadHint">Tap to choose JPG, PNG or WebP</span>
+            <img id="photoPreview" alt="Your selected photo preview" hidden>
+          </label>
+          <input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp">
+          <div class="crop-controls" id="cropControls" hidden>
+            <label>Zoom <input id="zoomRange" type="range" min="1" max="2.5" step="0.01" value="1"></label>
+            <label>Move left / right <input id="moveXRange" type="range" min="-100" max="100" step="1" value="0"></label>
+            <label>Move up / down <input id="moveYRange" type="range" min="-100" max="100" step="1" value="0"></label>
+            <button type="button" class="text-button" id="removePhoto">Remove photo</button>
+          </div>
+          <div class="upload-privacy"><span>⌑</span> Image is processed locally and never uploaded.</div>
+        </div>
+        <div class="blast-stage glass" id="blastStage">
+          <div class="stage-label"><span class="live-dot"></span> YOUR FESTIVE SCENE</div>
+          <div class="stage-stars" aria-hidden="true">✦　·　✧　　　·　✦</div>
+          <div class="scene-floor"></div>
+          <div class="character" id="character">
+            <div class="character-face"><span id="characterEmoji">🙂</span><img id="characterPhoto" alt="Your photo in the Diwali blast character" hidden></div>
+            <div class="character-body"></div><div class="character-legs"></div>
+          </div>
+          <div class="anar" id="anar"><div class="anar-flame"></div><div class="anar-pot"></div><span>ANAR</span></div>
+          <div class="countdown" id="countdown" aria-live="assertive"></div>
+          <div class="blast-message" id="blastMessage" aria-live="polite"></div>
+          <div class="stage-caption" id="stageCaption">YOUR MAIN CHARACTER ENERGY STARTS HERE</div>
+        </div>
+      </div>
+      <div class="blast-actions">
+        <button class="button button-primary" id="startBlast" type="button">START MY DIWALI BLAST! <span>✦</span></button>
+        <button class="button button-quiet" id="replayBlast" type="button" hidden>↻ REPLAY MY BLAST</button>
+      </div>
+      <div class="final-blast glass" id="finalBlast" hidden>
+        <div class="final-photo-wrap"><img id="finalPhoto" alt="Your Diwali celebration portrait" hidden><span id="finalEmoji">🙂</span></div>
+        <div><span class="section-kicker">THAT WAS YOUR MOMENT</span><h3>BOOOOOOM!!! <em>💥</em><br>HAPPY DIWALI!</h3><p>May your life shine brighter than a million fireworks!</p>
+          <div class="inline-actions"><button class="button button-small button-primary" id="downloadBlast" type="button">Download blast card</button><button class="button button-small button-outline" id="shareBlast" type="button">Share on WhatsApp</button><button class="text-button" id="anotherBlast" type="button">Create another</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section games-section" id="games">
+      <div class="section-heading centered">
+        <span class="section-kicker">02 / PLAY A LITTLE</span>
+        <h2>Festival <em>side quests.</em></h2>
+        <p>Three tiny games. A whole lot of bragging rights.</p>
+      </div>
+      <div class="games-grid">
+        <article class="game-card glass" id="catchGame">
+          <div class="game-icon">🪔</div><span class="game-number">GAME 01</span><h3>Catch the Diya</h3>
+          <p>Move your basket. Catch the falling lights.</p>
+          <div class="game-arena catch-arena" id="catchArena" aria-label="Catch the falling diya game area">
+            <div class="game-hud"><span>TIME <b id="catchTime">30</b></span><span>SCORE <b id="catchScore">0</b></span></div>
+            <div class="basket" id="basket">🧺</div><div class="catch-overlay" id="catchOverlay"><span>Ready?</span></div>
+          </div>
+          <div class="game-actions"><button class="button button-small button-outline game-start" data-game="catch" type="button">Start game</button><button class="text-button game-share" data-game="catch" type="button" hidden>Share score ↗</button></div>
+        </article>
+        <article class="game-card glass">
+          <div class="game-icon">🎆</div><span class="game-number">GAME 02</span><h3>Firework Tap</h3>
+          <p>Tap the targets before they disappear.</p>
+          <div class="game-arena tap-arena" id="tapArena" aria-label="Firework target game area">
+            <div class="game-hud"><span>TIME <b id="tapTime">10</b></span><span>SCORE <b id="tapScore">0</b> <small>BEST <b id="tapBest">0</b></small></span></div>
+            <div class="tap-overlay" id="tapOverlay"><span>Ready?</span></div>
+          </div>
+          <div class="game-actions"><button class="button button-small button-outline game-start" data-game="tap" type="button">Start game</button><button class="text-button game-share" data-game="tap" type="button" hidden>Share score ↗</button></div>
+        </article>
+        <article class="game-card glass">
+          <div class="game-icon">✨</div><span class="game-number">GAME 03</span><h3>Light the Diyas</h3>
+          <p>Tap each diya and fill the night with light.</p>
+          <div class="game-arena light-arena" id="lightGame">
+            <div class="game-hud"><span>LIGHT THEM ALL</span><span><b id="lightCount">0</b> / 9</span></div>
+            <div class="mini-diyas" id="miniDiyas"></div>
+            <div class="light-message" id="lightMessage" aria-live="polite"></div>
+          </div>
+          <div class="game-actions"><button class="button button-small button-outline" id="resetLight" type="button">Reset diyas</button><button class="text-button" id="lightShare" type="button" hidden>Share the glow ↗</button></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section card-section" id="greeting">
+      <div class="section-heading">
+        <span class="section-kicker">03 / SEND SOME LIGHT</span>
+        <h2>A wish with<br><em>your name on it.</em></h2>
+        <p>Make a little card for someone you love. Download the actual image or send it their way.</p>
+      </div>
+      <div class="greeting-layout">
+        <form class="greeting-form glass" id="greetingForm">
+          <label>Your name<input id="senderName" maxlength="32" placeholder="e.g. Aashi" autocomplete="given-name"></label>
+          <label>Send to <span class="optional">(optional)</span><input id="friendName" maxlength="32" placeholder="e.g. Priya"></label>
+          <label>Your Diwali wish<textarea id="wishInput" maxlength="160" rows="3" placeholder="May your home shine with happiness and prosperity!">May your home shine with happiness and prosperity!</textarea></label>
+          <button class="button button-primary" type="submit">MAKE MY WISH CARD <span>✦</span></button>
+          <p class="form-note">Your details are only used to create this card in your browser.</p>
+        </form>
+        <div class="greeting-preview-wrap">
+          <div class="greeting-preview" id="greetingPreview">
+            <div class="card-spark card-spark-one">✦</div><div class="card-spark card-spark-two">✧</div>
+            <span class="preview-kicker">A LITTLE LIGHT FOR YOU</span><div class="preview-diya">🪔</div>
+            <span class="preview-to" id="previewTo">DEAR FRIEND</span>
+            <h3>Happy<br><em>Diwali</em></h3>
+            <p id="previewWish">May your home shine with happiness and prosperity!</p>
+            <div class="preview-from" id="previewFrom">WITH LOVE, A FRIEND</div>
+          </div>
+          <div class="greeting-actions"><button class="button button-small button-outline" id="downloadGreeting" type="button">Download PNG</button><button class="button button-small button-primary" id="shareGreeting" type="button">Share greeting</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section diya-section" id="diyaWall">
+      <div class="section-heading centered">
+        <span class="section-kicker">04 / LEAVE A LITTLE LIGHT</span><h2>The <em>Diya Wall.</em></h2>
+        <p>Tap a diya to light it and reveal a wish. Your lights stay saved on this device.</p>
+      </div>
+      <div class="diya-wall glass" id="diyaWallGrid" aria-label="Interactive Diya Wall"></div>
+      <p class="wall-status" id="wallStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="section extras-section">
+      <div class="extra-panel glass wish-panel">
+        <div><span class="section-kicker">A WISH FOR THE MOMENT</span><h2 id="randomWish">May your life sparkle brighter than the stars.</h2><button class="text-button" id="newWish" type="button">Another wish ↻</button></div>
+        <div class="wish-actions"><button class="button button-small button-outline" id="copyWish" type="button">Copy wish</button><button class="button button-small button-primary" id="shareWish" type="button">Share wish</button></div>
+      </div>
+      <div class="extra-panel glass sound-panel">
+        <div><span class="section-kicker">05 / THE SOUND OF JOY</span><h2>Diwali soundboard.</h2><p>Real recordings of firecrackers and fireworks. Sound only starts after you turn it on.</p></div>
+        <div class="soundboard">
+          <button type="button" data-sound="boom"><span>💥</span>PATĀK!</button><button type="button" data-sound="rocket"><span>🚀</span>ROCKET</button><button type="button" data-sound="sparkle"><span>🧨</span>CRACKLE</button><button type="button" data-sound="celebration"><span>🎉</span>CELEBRATE</button><button type="button" data-sound="magic"><span>🎆</span>FIREWORKS</button>
+        </div>
+        <div class="audio-controls"><label><input id="musicToggle" type="checkbox"> Fireworks ambience</label><label>Volume <input id="volumeRange" type="range" min="0" max="1" step="0.05" value="0.65"></label></div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="closing-stars" aria-hidden="true">✦　✧　·　✦　·　✧　✦</div>
+      <span class="section-kicker">THE NIGHT IS YOURS</span>
+      <h2>Diwali is better<br>when we celebrate <em>together.</em></h2>
+      <div class="closing-actions"><button class="button button-primary" id="closingBlast" type="button">CREATE ANOTHER BLAST</button><button class="button button-outline" id="inviteFriends" type="button">SEND HAPPINESS ↗</button></div>
+      <p class="closing-footnote">All fireworks here are virtual. Celebrate safely, keep the joy real.</p>
+    </section>
+  </main>
+  <footer><a class="brand" href="#home"><span class="brand-mark">✦</span> DIWALI<span>BLAST</span></a><span>MADE WITH LIGHT & A LITTLE PIXEL MAGIC</span><button class="text-button" id="copyLink" type="button">Copy website link</button></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
